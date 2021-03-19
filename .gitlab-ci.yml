@@ -1,0 +1,17 @@
+image: node:latest
+install:
+  script:
+    - cd $NAME
+    - npm ci
+    - npm run test:ci
+    - cd ..
+  artifacts:
+    expire_in: 7 days
+    when: always
+    reports:
+      junit:
+        - ./**/junit.xml
+  parallel:
+    matrix:
+      - task-api
+      - task-bugsearch
